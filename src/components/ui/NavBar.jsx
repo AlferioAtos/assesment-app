@@ -8,7 +8,7 @@ export const NavBar = () =>
                 className="navbar-brand"
                 to="/"
             >
-                React Assesment
+                React Assesments
             </Link>
 
             <div className="navbar-collapse">
@@ -46,7 +46,7 @@ export const NavBar = () =>
                 <ul className="navbar-nav ml-auto">
                     <NavLink
                         className="nav-item nav-link"
-                        to="/login"
+                        to="/VehicleApp"
                     >
                         Senior Assesment
                     </NavLink>

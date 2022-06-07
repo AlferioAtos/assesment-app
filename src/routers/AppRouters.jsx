@@ -5,6 +5,7 @@ import { CompanyRelatedEmplyees } from "../components/CompanyRelatedEmployees/Co
 import { SalaryByGender } from "../components/SalaryByGender/SalaryByGender";
 import { SortedBySalary } from "../components/sotedBySalary/SortedBySalary";
 import { NavBar } from "../components/ui/NavBar";
+import { VehicleApp } from "../components/VehicleApp/VehicleApp";
 export const AppRouters = () =>
 {
     return (
@@ -15,6 +16,7 @@ export const AppRouters = () =>
                 <Route path="/ActiveCompanies" element={<ActiveCompanyEmployees />} />
                 <Route path="/SalaryByGender" element={<SalaryByGender />} />
                 <Route path="/SortBySalary" element={<SortedBySalary />} />
+                <Route path="/VehicleApp" element={<VehicleApp />} />
             </Routes>
         </BrowserRouter>
     )

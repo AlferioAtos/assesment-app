@@ -76,7 +76,7 @@ export const VehicleApp = () =>
         else if (addon1 !== '' && addon2 === '')
         {
             console.log(addon1);
-            selectedFinalProduct.addonsSelected.push(addons.filter(addon => addon.upgrade.toLowerCase() === addon1.toLowerCase())[0]);
+            selectedFinalProduct.addonsSelected.push(addons.filter(addon => addon.upgrade.toLowerCase() == addon1.toLowerCase())[0]);
             setVehicle(selectedFinalProduct);
         }
         else

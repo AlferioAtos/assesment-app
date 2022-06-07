@@ -235,7 +235,7 @@ export const getVehicles = () => new Promise((resolve) =>
                 ]
             }
         ]);
-    }, 1000);
+    }, 1000 * Math.random());
 });
 
 export const getAddons = () => new Promise((resolve) =>
@@ -264,5 +264,5 @@ export const getAddons = () => new Promise((resolve) =>
                 "price": 1226
             }
         ]);
-    }, 1000);
+    }, 1000 * Math.random());
 });

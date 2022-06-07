@@ -11,6 +11,9 @@ export const VehicleApp = () =>
     const [showData, setShowData] = useState(false);
     const searchVehicle = (e) =>
     {
+        setVehicleSelectedData(null);
+        vehicleSelectedData ? document.getElementById(`finish`).value = 'Select an option' : console.log('');
+        setShowData(false);
         if (e !== 'Select an option')
         {
             const selectedVehicle = vehicles.find(vehicleSearch => vehicleSearch.product === e);
@@ -19,23 +22,23 @@ export const VehicleApp = () =>
         }
         else
         {
-            setShowData(false);
+
+            setVehilceSelected(null);
             setWarn(true);
         }
     }
     const getVehicleData = (e) =>
     {
         setVehicleSelectedData(null);
+        setShowData(false);
         if (e !== 'Select an option')
         {
-            setShowData(false);
             const vehicleData = { product: vehicleSelected.product, price: vehicleSelected.finishes.find(fhinish => fhinish.finish === e).price, finish: e, upgrades: [] };
             setVehicleSelectedData(vehicleData);
             setWarn(false);
         }
         else
         {
-            setShowData(false);
             setWarn(true);
         }
     }
@@ -63,7 +66,7 @@ export const VehicleApp = () =>
 
 
             <div className="mb-3">
-                <label htmlFor="disabledSelect" className="form-label">Disabled select menu</label>
+                <label htmlFor="product" className="form-label">Disabled select menu</label>
                 <select className="form-select" onChange={e => searchVehicle(e.target.value)}>
                     <option key='0' value='Select an option'>Select an option</option>
                     {vehicles.map(vehicle =>
@@ -75,8 +78,8 @@ export const VehicleApp = () =>
             {
                 vehicleSelected ?
                     <div className="mb-3">
-                        <label htmlFor="disabledSelect" className="form-label">Disabled select menu</label>
-                        <select id="disabledSelect" className="form-select" onChange={e => getVehicleData(e.target.value)}>
+                        <label htmlFor="finish" className="form-label">Disabled select menu</label>
+                        <select id="finish" className="form-select" onChange={e => getVehicleData(e.target.value)}>
                             <option value='Select an option' key='0'>Select an Option</option>
 
                             {
@@ -91,7 +94,7 @@ export const VehicleApp = () =>
                     : <></>
             }
 
-            <button onClick={showDataTrigger} className="btn btn-primary" disabled={!vehicleSelected || !vehicleSelectedData ? true : false}>Submit</button>
+            <button onClick={showDataTrigger} className="btn btn-primary" disabled={!vehicleSelected || !vehicleSelectedData || showData ? true : false}>Submit</button>
             {
                 warn ?
                     <div className="alert alert-danger mt-3" role="alert">

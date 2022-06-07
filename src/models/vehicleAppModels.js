@@ -252,7 +252,7 @@ export const getAddons = () => new Promise((resolve) =>
                 "price": 531
             },
             {
-                "upgrade": "SportSeats",
+                "upgrade": "Sport Seats",
                 "price": 1174
             },
             {

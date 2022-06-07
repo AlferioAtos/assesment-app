@@ -1,164 +1,92 @@
 
-import { useState } from "react";
-import { useVehicles } from "../../hooks/vehicleHooks";
+import { useEffect, useState } from "react";
+import { useVehicles, useVehiclesByString } from "../../hooks/vehicleHooks";
 
 export const VehicleApp = () =>
 {
-    const [vehicleSelected, setVehilceSelected] = useState(null);
-    const [warn, setWarn] = useState(false);
-    const [vehicleSelectedData, setVehicleSelectedData] = useState(null);
     const [vehicles, addons] = useVehicles();
-    const [showData, setShowData] = useState(false);
-    const searchVehicle = (e) =>
+    const [vehicle, setVehicle] = useState({
+        product: '',
+        price: 0,
+        addonsSelected: []
+    });
+
+    const searchByStringParam = (string, addons, vehicles) =>
     {
-        setVehicleSelectedData(null);
-        vehicleSelectedData ? document.getElementById(`finish`).value = 'Select an option' : console.log('');
-        setShowData(false);
-        if (e !== 'Select an option')
+        const wordArray = string.match(/\b(\w+)\b/g);
+        const finishQery = wordArray[0].concat(' ', wordArray[1]);
+        const productQuery = wordArray[2].concat(' ', wordArray[3]);
+        let addon1 = '';
+        let addon2 = '';
+        if (wordArray.includes('with') && wordArray.includes('and'))
         {
-            const selectedVehicle = vehicles.find(vehicleSearch => vehicleSearch.product === e);
-            setVehilceSelected(selectedVehicle);
-            setWarn(false);
+            const withIndex = wordArray.indexOf('with');
+            const andIndex = wordArray.indexOf('and');
+            if (withIndex + 1 === (andIndex - 1))
+            {
+                addon1 = wordArray[withIndex + 1];
+            } else
+            {
+                addon1 = wordArray[withIndex + 1].concat(' ', wordArray[andIndex - 1]);
+            }
+
+
+            addon2 = wordArray[andIndex + 1].concat(' ', wordArray[wordArray.length - 1]);
+        } else if (wordArray.includes('with') && !wordArray.includes('and'))
+        {
+            const withIndex = wordArray.indexOf('with');
+            addon1 = wordArray[withIndex + 1].concat(' ', wordArray[wordArray.length - 1]);
         }
-        else
+
+        const selectedCar = vehicles.filter(vehicle => vehicle.product.toLowerCase() === productQuery.toLowerCase());
+        let selectedFinalProduct = {
+            product: selectedCar[0].product,
+            price: selectedCar[0].finishes.filter(finish => finish.finish.toLowerCase() === finishQery.toLowerCase())[0].price,
+            finish: finishQery,
+            addonsSelected: []
+        };
+        if (addon1 !== '' && addon2 !== '')
         {
 
-            setVehilceSelected(null);
-            setWarn(true);
+            selectedFinalProduct.addonsSelected.push(addons.filter(addon => addon.upgrade.toLowerCase() === addon1.toLowerCase())[0]);
+            selectedFinalProduct.addonsSelected.push(addons.filter(addon => addon.upgrade.toLowerCase() === addon2.toLowerCase())[0]);
+            setVehicle(selectedFinalProduct);
         }
-    }
-    const getVehicleData = (e) =>
-    {
-        setVehicleSelectedData(null);
-        setShowData(false);
-        if (e !== 'Select an option')
+        else if (addon1 !== '' && addon2 === '')
         {
-            const vehicleData = { product: vehicleSelected.product, price: vehicleSelected.finishes.find(fhinish => fhinish.finish === e).price, finish: e, upgrades: [] };
-            setVehicleSelectedData(vehicleData);
-            setWarn(false);
+            selectedFinalProduct.addonsSelected.push(addons.filter(addon => addon.upgrade.toLowerCase() === addon1.toLowerCase())[0]);
+            setVehicle(selectedFinalProduct);
         }
         else
         {
-            setWarn(true);
+            setVehicle(selectedFinalProduct);
         }
     }
-    const showDataTrigger = () =>
+    const totalPrice = () =>
     {
-        setShowData(true);
+        if (vehicle.addonsSelected.length > 0)
+        {
+            return vehicle.price + vehicle.addonsSelected[0].price + vehicle.addonsSelected[1].price;
+        }
+        else
+        {
+            return vehicle.price;
+        }
     }
-    const addUpgrade = (upgradePrice, upgrade, id) =>
-    {
-        const vehicleData = { ...vehicleSelectedData, price: vehicleSelectedData.price + upgradePrice, upgrades: [...vehicleSelectedData.upgrades, { id: id, upgrade: upgrade }] };
-        setVehicleSelectedData(vehicleData);
-        document.getElementById(`Add${id}`).hidden = true;
-        document.getElementById(`Remove${id}`).hidden = false;
-    }
-    const removeUpgrade = (upgradePrice, id) =>
-    {
-        const vehicleData = { ...vehicleSelectedData, price: vehicleSelectedData.price - upgradePrice, upgrades: vehicleSelectedData.upgrades.filter(upgrade => upgrade.id !== id) };
-        setVehicleSelectedData(vehicleData);
-        document.getElementById(`Add${id}`).hidden = false;
-        document.getElementById(`Remove${id}`).hidden = true;
-    }
+    /*   vehicleSelectedData.upgrades.filter(upgrade => upgrade.id !== id) */
+
     return (
 
         <div className="container-fluid">
 
 
-            <div className="mb-3">
-                <label htmlFor="product" className="form-label">Disabled select menu</label>
-                <select className="form-select" onChange={e => searchVehicle(e.target.value)}>
-                    <option key='0' value='Select an option'>Select an option</option>
-                    {vehicles.map(vehicle =>
-                    {
-                        return <option key={vehicle.product} value={vehicle.product}>{vehicle.product}</option>
-                    })}
-                </select>
-            </div>
-            {
-                vehicleSelected ?
-                    <div className="mb-3">
-                        <label htmlFor="finish" className="form-label">Disabled select menu</label>
-                        <select id="finish" className="form-select" onChange={e => getVehicleData(e.target.value)}>
-                            <option value='Select an option' key='0'>Select an Option</option>
+            <h2>Vehicles</h2>
 
-                            {
-                                vehicleSelected.finishes.map(finish =>
-                                {
-                                    return <option key={finish.finish} value={finish.finish}>{finish.finish} </option>
-                                })
-                            }
-
-                        </select>
-                    </div>
-                    : <></>
-            }
-
-            <button onClick={showDataTrigger} className="btn btn-primary" disabled={!vehicleSelected || !vehicleSelectedData || showData ? true : false}>Submit</button>
+            <input type="text" defaultValue='' id='string' />
+            <button onClick={() => searchByStringParam(document.getElementById('string').value, addons, vehicles)}>Search</button>
             {
-                warn ?
-                    <div className="alert alert-danger mt-3" role="alert">
-                        Please select a valid option to continue
-                    </div>
-                    : <></>
+                vehicle ? <h1>Vehicle price = {totalPrice()}</h1> : <h1>No vehicle selected</h1>
             }
-            {
-                showData ? <table className="table table-striped" id="upgradeTable">
-                    <thead>
-                        <tr>
-                            <th>Upgrade</th>
-                            <th>Price</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="">
-                        {addons.map(
-                            (upgrade, index) => (
-                                <tr key={index}>
-                                    <td>{upgrade.upgrade}</td>
-                                    <td>$ {upgrade.price}</td>
-                                    <td>
-                                        <button id={`Add${index}`} className="btn btn-success"
-                                            onClick={() => { addUpgrade(upgrade.price, upgrade.upgrade, index) }}
-                                        >Add</button>
-                                        <button hidden={true}
-                                            className="btn btn-danger"
-                                            id={`Remove${index}`}
-                                            onClick={() => { removeUpgrade(upgrade.price, index) }}
-                                        >Remove</button>
-                                    </td>
-                                </tr>
-                            )
-                        )}
-                    </tbody>
-                </table>
-                    : <></>
-            }
-            {
-                showData ?
-                    <ul>
-                        <li><h4>Product:</h4> {vehicleSelectedData.product}</li>
-                        <li><h4>Finish:</h4> {vehicleSelectedData.finish}</li>
-                        {
-                            vehicleSelectedData.upgrades.length > 0 ?
-                                <span>
-                                    <li><h4>Addons</h4></li>
-                                    <ol>
-                                        {
-                                            vehicleSelectedData.upgrades.map(upgrade =>
-                                            {
-                                                return <li key={upgrade.id}>{upgrade.upgrade}</li>
-                                            })
-                                        }
-                                    </ol>
-                                </span>
-                                : <></>
-                        }
-                        <li><h4>Total:</h4> $ {vehicleSelectedData.price}</li>
-                    </ul>
-                    : <></>
-            }
-
         </div>
     )
 }

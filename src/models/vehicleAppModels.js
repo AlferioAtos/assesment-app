@@ -7,7 +7,7 @@ export const getVehicles = () => new Promise((resolve) =>
                 "product": "Sport Bike",
                 "finishes": [
                     {
-                        "finish": "Matte Yellow",
+                        "finish": "Mate Yellow",
                         "price": 68435
                     },
                     {
@@ -40,7 +40,7 @@ export const getVehicles = () => new Promise((resolve) =>
                 "product": "Sport Sedan",
                 "finishes": [
                     {
-                        "finish": "Matte Yellow",
+                        "finish": "Mate Yellow",
                         "price": 64794
                     },
                     {
@@ -73,7 +73,7 @@ export const getVehicles = () => new Promise((resolve) =>
                 "product": "Sport hatchback",
                 "finishes": [
                     {
-                        "finish": "Matte Yellow",
+                        "finish": "Mate Yellow",
                         "price": 53576
                     },
                     {
@@ -106,7 +106,7 @@ export const getVehicles = () => new Promise((resolve) =>
                 "product": "Compact Bike",
                 "finishes": [
                     {
-                        "finish": "Matte Yellow",
+                        "finish": "Mate Yellow",
                         "price": 99858
                     },
                     {
@@ -139,7 +139,7 @@ export const getVehicles = () => new Promise((resolve) =>
                 "product": "Compact Sedan",
                 "finishes": [
                     {
-                        "finish": "Matte Yellow",
+                        "finish": "Mate Yellow",
                         "price": 115253
                     },
                     {
@@ -172,7 +172,7 @@ export const getVehicles = () => new Promise((resolve) =>
                 "product": "Compact hatchback",
                 "finishes": [
                     {
-                        "finish": "Matte Yellow",
+                        "finish": "Mate Yellow",
                         "price": 65717
                     },
                     {
@@ -205,7 +205,7 @@ export const getVehicles = () => new Promise((resolve) =>
                 "product": "Convertible Sedan",
                 "finishes": [
                     {
-                        "finish": "Matte Yellow",
+                        "finish": "Mate Yellow",
                         "price": 107086
                     },
                     {

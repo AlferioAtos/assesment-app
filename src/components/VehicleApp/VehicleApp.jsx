@@ -67,16 +67,16 @@ export const VehicleApp = () =>
             finish: finishQery,
             addonsSelected: []
         };
+        console.log(addon1.toLowerCase().trim());
         if (addon1 !== '' && addon2 !== '')
         {
-            selectedFinalProduct.addonsSelected.push(addons.filter(addon => addon.upgrade.toLowerCase() === addon1.toLowerCase())[0]);
-            selectedFinalProduct.addonsSelected.push(addons.filter(addon => addon.upgrade.toLowerCase() === addon2.toLowerCase())[0]);
+            selectedFinalProduct.addonsSelected.push(addons.filter(addon => addon.upgrade.toLowerCase().trim() === addon1.toLowerCase().trim())[0]);
+            selectedFinalProduct.addonsSelected.push(addons.filter(addon => addon.upgrade.toLowerCase().trim() === addon2.toLowerCase().trim())[0]);
             setVehicle(selectedFinalProduct);
         }
         else if (addon1 !== '' && addon2 === '')
         {
-            console.log(addon1);
-            selectedFinalProduct.addonsSelected.push(addons.filter(addon => addon.upgrade.toLowerCase() == addon1.toLowerCase())[0]);
+            selectedFinalProduct.addonsSelected.push(addons.filter(addon => addon.upgrade.toLowerCase().trim() === addon1.toLowerCase().trim())[0]);
             setVehicle(selectedFinalProduct);
         }
         else

@@ -2,6 +2,19 @@
 
 This is a React app used to assesment the React skills.
 
+#### Queries:
+
+You can use any data combination aslong a it contains next structure: **finish + product + with (if you need an addon) + addon + and (if you need another addon maximum 2 addons per query) + addon**
+
+#### Testing addons corrected
+
+The query test llist in the assesment has several spelling mistakes that cause conflicts with data models, these are the fixed queries:
+
+- mate yellow sport sedan with turbocharger and sport seats
+- mate grey compact bike with underbody neon lights and window tint
+- mate grey sport bike with suspension upgrades
+- metallic black convertible sedan without addons
+
 #### Routes:
 
 - First : This route will take you to the firts point of the ATOS DTC code Test.

@@ -11,6 +11,16 @@ export const Home = () =>
             </div>
             <div className="row">
 
+                <h4>Queries:</h4>
+                <p>You can use any data combination aslong a it contains next structure: <b>finish + product + with (if you need an addon) + addon + and (if you need another addon maximum 2 addons per query) + addon</b></p>
+                <h4>Testing addons corrected</h4>
+                <p>The query test llist in the assesment has several spelling mistakes that cause conflicts with data models, these are the fixed queries:</p>
+                <ul>
+                    <li>mate yellow sport sedan with turbocharger and sport seats</li>
+                    <li>mate grey compact bike with underbody neon lights and window tint</li>
+                    <li>mate grey sport bike with suspension upgrades</li>
+                    <li>metallic black convertible sedan without addons</li>
+                </ul>
                 <h4>Routes:</h4>
                 <div className="container">
                     <ul>

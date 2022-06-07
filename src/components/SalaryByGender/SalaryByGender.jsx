@@ -11,7 +11,7 @@ export const SalaryByGender = () =>
                 companies.length > 0 ?
                     <table className="table">
                         <thead>
-                            <tr>
+                            <tr key='a'>
                                 <th scope="col">Company</th>
                                 <th scope="col">Male Salary</th>
                                 <th scope="col">Female Salary</th>
